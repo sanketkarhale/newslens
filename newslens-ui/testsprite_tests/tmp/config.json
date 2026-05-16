@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "executionArgs": {
+    "projectName": "newslens-ui",
+    "projectPath": "c:\\Users\\GGG\\Downloads\\news\\newslens-ui",
+    "testIds": [],
+    "additionalInstruction": "run failed tests",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-5HE3MQxAMMYWZmBJ67HAHHt3BAddP3pAAVu17y3_3qcc1ErKUHIKHd22iCvOFoNWuk8WbCqAX7MeAZA1OM_7Q837dZa3ZPoct2xD2z5A28dvqGOmDgVS0B1IkkAQHx7dHK0"
+    }
+  },
+  "serverPort": 63582
+}

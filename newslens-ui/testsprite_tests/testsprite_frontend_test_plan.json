@@ -1,0 +1,231 @@
+[
+  {
+    "id": "TC001",
+    "title": "Analyze a custom topic from the home page",
+    "description": "A user can enter a topic on the home page, start analysis, and reach a results state.",
+    "category": "NewsLens Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search input field with a topic"
+      },
+      {
+        "type": "action",
+        "description": "Click the analysis action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analyzed search results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Open the dashboard overview",
+    "description": "A user can open the dashboard and see the analytics summary, sentiment distribution, and news feed content.",
+    "category": "Analysis Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the analytics summary is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the sentiment distribution is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the news feed is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Analyze a trending topic from the home page",
+    "description": "A user can choose a trending topic on the home page and start analysis from that selection.",
+    "category": "NewsLens Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Open the trending topics list"
+      },
+      {
+        "type": "action",
+        "description": "Choose a trending topic"
+      },
+      {
+        "type": "action",
+        "description": "Click the analysis action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analyzed search results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Refine a search before analyzing",
+    "description": "A user can set a topic, adjust both filters, and then start analysis with the selected refinements.",
+    "category": "NewsLens Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search input field with a topic"
+      },
+      {
+        "type": "action",
+        "description": "Select a time horizon filter"
+      },
+      {
+        "type": "action",
+        "description": "Select a volume depth filter"
+      },
+      {
+        "type": "action",
+        "description": "Click the analysis action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analyzed search results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Browse a dashboard article for more details",
+    "description": "A user can browse the news feed on the dashboard and open more details for an article.",
+    "category": "Analysis Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the news feed"
+      },
+      {
+        "type": "action",
+        "description": "Click the read more action for an article"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify article details are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Start analysis with only a custom topic",
+    "description": "A user can search with just a typed topic and still reach the analyzed results state.",
+    "category": "NewsLens Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the search input field with a topic"
+      },
+      {
+        "type": "action",
+        "description": "Click the analysis action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analyzed search results are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Switch dashboard sections from the sidebar",
+    "description": "A user can use the dashboard sidebar to move to another section and see the displayed content update.",
+    "category": "Analysis Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard"
+      },
+      {
+        "type": "action",
+        "description": "Use the sidebar navigation to switch sections"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard content changes to the selected section"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Move from search to dashboard and confirm both pages render",
+    "description": "A user can navigate from the home search page to the dashboard route and see both views render correctly.",
+    "category": "Analysis Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the dashboard navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the search home page content is no longer displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC009",
+    "title": "Handle an empty search attempt",
+    "description": "The home page prevents analysis when no topic is provided and shows an empty or validation state.",
+    "category": "NewsLens Search",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the analysis action"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a search validation or empty state is visible"
+      }
+    ],
+    "priority": "Low"
+  }
+]

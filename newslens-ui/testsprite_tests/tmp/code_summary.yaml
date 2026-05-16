@@ -1,0 +1,46 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js
+  - React
+  - Tailwind CSS
+routes:
+  - path: /
+    file: app/page.tsx
+    auth_required: false
+    description: NewsLens Search home page
+  - path: /dashboard
+    file: app/dashboard/page.tsx
+    auth_required: false
+    description: Analysis Dashboard page
+features:
+  - name: NewsLens Search
+    description: Search interface with filters for topic, time horizon, and volume depth
+    files:
+      - app/page.tsx
+    entry_route: /
+    user_interactions:
+      - Fill search input field
+      - Click Analyze Now button
+      - Click on Time Horizon filters
+      - Click on Volume Depth filters
+      - Click on Trending Topics
+    api_calls: []
+    auth_required: false
+  - name: Analysis Dashboard
+    description: Dashboard displaying total articles, sentiment distribution, and news feed
+    files:
+      - app/dashboard/page.tsx
+    entry_route: /dashboard
+    user_interactions:
+      - View analytics and sentiment distribution
+      - View news feed articles
+      - Click on Read More for articles
+      - Use sidebar navigation
+    api_calls: []
+    auth_required: false
+known_limitations:
+  - issue: All data is static mock data, not connected to backend yet
+    location: app/page.tsx, app/dashboard/page.tsx
+    impact: Interactions do not trigger real API calls or state updates
