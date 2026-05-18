@@ -91,7 +91,8 @@ export default function LoginPage() {
             </div>
 
             <button 
-              onClick={() => alert('Google Sign-In requires Client ID configuration in .env. Use Email/Mobile for now!')}
+              type="button"
+              onClick={() => signIn('google')}
               className="mt-6 w-full flex items-center justify-center gap-3 bg-white text-black font-bold rounded-3xl py-4 shadow-xl hover:bg-gray-100 active:scale-[0.98] transition-all"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
