@@ -237,14 +237,14 @@ function DashboardContent() {
             <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" onClick={() => setSelectedArticle(null)}></div>
             <motion.div 
               initial={{ y: 50, scale: 0.95 }} animate={{ y: 0, scale: 1 }} exit={{ y: 50, scale: 0.95 }}
-              className="w-full max-w-5xl h-full glass-card relative z-10 flex flex-col md:flex-row overflow-hidden shadow-2xl"
+              className="w-full max-w-5xl h-[95%] md:h-full glass-card relative z-10 flex flex-col md:flex-row overflow-y-auto md:overflow-hidden shadow-2xl"
             >
               <button onClick={() => setSelectedArticle(null)} className="absolute top-4 right-4 md:right-auto md:left-4 z-20 w-10 h-10 bg-black/50 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/20 transition-colors text-white border border-white/10">
                 <X size={20} />
               </button>
 
               {/* Main Reading Area */}
-              <div className="flex-1 overflow-y-auto p-8 md:p-16 md:pl-24 bg-black/40">
+              <div className="flex-none md:flex-1 md:overflow-y-auto p-8 pt-16 md:p-16 md:pl-24 bg-black/40">
                 <div className="max-w-2xl mx-auto">
                   <div className="flex items-center gap-4 mb-6">
                     <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-white/70 uppercase tracking-widest">{selectedArticle.source}</span>
@@ -269,7 +269,7 @@ function DashboardContent() {
               </div>
 
               {/* AI Summary Sidebar */}
-              <div className="w-full md:w-80 bg-surface border-l border-white/5 p-8 flex flex-col h-full overflow-y-auto">
+              <div className="w-full md:w-80 bg-surface border-t md:border-t-0 md:border-l border-white/5 p-8 flex flex-col flex-none md:h-full md:overflow-y-auto">
                 <h3 className="text-sm font-bold tracking-widest uppercase text-primary flex items-center gap-2 mb-6">
                   <Zap size={16} /> AI Analysis
                 </h3>
