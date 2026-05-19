@@ -1,9 +1,10 @@
 "use client";
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import createGlobe from 'cobe';
-import { ShieldCheck, Zap, Activity, Globe, MessageSquare, Database, Cpu, TrendingUp, TrendingDown, BarChart2, Layers, Crosshair, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ShieldCheck, Zap, Activity, Globe, MessageSquare, Database, Cpu, TrendingUp, TrendingDown, BarChart2, Layers, Crosshair, Users, Search } from 'lucide-react';
 
 // --- 1. PREMIUM NAVBAR ---
 const PremiumNavbar = () => {
@@ -34,6 +35,16 @@ const PremiumNavbar = () => {
 
 // --- 2. CINEMATIC HERO SECTION ---
 const CinematicHero = () => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(searchQuery.trim()) {
+      router.push(`/dashboard?topic=${encodeURIComponent(searchQuery)}`);
+    }
+  };
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden pt-20">
       {/* Background Neural Grids & Glows */}
@@ -60,13 +71,29 @@ const CinematicHero = () => {
           Real-time intelligence for markets, geopolitics, technology, AI, and global events. Synthesize millions of data points into actionable insights instantly.
         </p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link href="/dashboard" className="px-10 py-5 rounded-[2rem] bg-white text-black font-display font-bold text-lg hover:scale-105 active:scale-95 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)]">
-            Launch Dashboard
-          </Link>
-          <a href="#market" className="px-10 py-5 rounded-[2rem] bg-white/5 border border-white/10 text-white font-display font-bold text-lg hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2">
-            <Activity size={20} className="text-primary"/> Watch Live Intelligence
-          </a>
+        <div className="flex flex-col items-center justify-center gap-6 w-full max-w-2xl mx-auto">
+          <form onSubmit={handleSearch} className="w-full relative flex items-center">
+            <Search className="absolute left-6 text-white/50" size={24} />
+            <input 
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search global intelligence, markets, or geopolitics..."
+              className="w-full bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] py-5 pl-16 pr-32 text-lg text-white placeholder:text-white/40 focus:outline-none focus:border-primary/50 transition-colors shadow-glass"
+            />
+            <button type="submit" className="absolute right-3 top-2.5 bottom-2.5 px-6 rounded-full bg-primary hover:bg-primary/80 text-white font-bold transition-all shadow-glow flex items-center justify-center">
+              Analyze
+            </button>
+          </form>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link href="/dashboard" className="px-8 py-4 rounded-[2rem] bg-white text-black font-display font-bold hover:scale-105 active:scale-95 transition-transform shadow-[0_0_40px_rgba(255,255,255,0.3)]">
+              Launch Dashboard
+            </Link>
+            <a href="#market" className="px-8 py-4 rounded-[2rem] bg-white/5 border border-white/10 text-white font-display font-bold hover:bg-white/10 transition-colors backdrop-blur-md flex items-center gap-2">
+              <Activity size={20} className="text-primary"/> Watch Live Intelligence
+            </a>
+          </div>
         </div>
       </motion.div>
     </section>

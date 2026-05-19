@@ -6,9 +6,7 @@ import { ShieldAlert, ShieldCheck, Zap, TrendingUp, TrendingDown, Eye, MessageSq
 
 function DashboardContent() {
   const searchParams = useSearchParams();
-  const initialTopic = searchParams.get('topic') || 'Global Economy';
-
-  const [activeTopic, setActiveTopic] = useState(initialTopic);
+  const activeTopic = searchParams.get('topic') || 'Global Economy';
   const [lang, setLang] = useState("en");
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
