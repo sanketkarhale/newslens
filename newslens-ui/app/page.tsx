@@ -52,7 +52,7 @@ const CinematicHero = () => {
            <span className="text-xs font-bold text-primary tracking-[0.2em] uppercase">NewsLens Core Engine Online</span>
         </div>
         
-        <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-display font-black text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary tracking-tighter leading-[1.1] mb-8 drop-shadow-[0_0_30px_rgba(0,212,255,0.5)]">
+        <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50 tracking-tighter leading-[1.1] mb-8 drop-shadow-2xl">
           The AI Layer Between You <br className="hidden md:block"/> and Global Chaos.
         </h1>
         

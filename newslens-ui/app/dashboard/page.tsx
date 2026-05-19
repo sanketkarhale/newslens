@@ -65,7 +65,7 @@ function DashboardContent() {
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 className="text-3xl md:text-5xl font-display font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white to-primary drop-shadow-[0_0_15px_rgba(0,212,255,0.5)] mb-2">Global Intelligence</h1>
+          <h1 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-2">Global Intelligence</h1>
           <p className="text-white/50 font-medium">Monitoring real-time data for: <span className="text-primary">{data.topic}</span></p>
         </div>
         <div className="flex gap-4">

@@ -27,9 +27,9 @@ const config: Config = {
         'mesh-dark': 'radial-gradient(at 40% 20%, rgba(10, 132, 255, 0.15) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(94, 92, 230, 0.15) 0px, transparent 50%), radial-gradient(at 0% 50%, rgba(191, 90, 242, 0.15) 0px, transparent 50%)',
       },
       fontFamily: {
-        sans: ['var(--font-rajdhani)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-orbitron)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-chakra)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
+        poppins: ['var(--font-poppins)', 'system-ui', 'sans-serif'],
       },
       animation: {
         'spin-slow': 'spin 8s linear infinite',

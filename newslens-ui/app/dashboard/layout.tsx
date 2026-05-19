@@ -1,14 +1,23 @@
 "use client";
 import { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Search, Bell, Bookmark, TrendingUp, Settings, Map, MessageSquare, Menu, X } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
+import { Search, Bell, Bookmark, TrendingUp, Settings, Map, Menu, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const [breakingNews, setBreakingNews] = useState("AI regulations in EU finalized. Bitcoin hits new resistance level. Asian markets open mixed.");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if(searchQuery.trim()) {
+      router.push(`/dashboard?topic=${encodeURIComponent(searchQuery)}`);
+    }
+  };
 
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: TrendingUp },
@@ -74,6 +83,9 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <button onClick={() => setSidebarOpen(true)} className="md:hidden text-white/70 hover:text-white">
               <Menu size={24} />
             </button>
+            <button onClick={() => router.back()} className="hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-white/70 hover:text-white">
+              <ArrowLeft size={18} />
+            </button>
             
             {/* Breaking News Radar */}
             <div className="hidden lg:flex items-center gap-3 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 overflow-hidden w-96">
@@ -92,13 +104,18 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full px-4 py-2 border border-white/10 focus-within:border-primary/50 transition-colors">
+            <form onSubmit={handleSearch} className="hidden md:flex items-center bg-white/5 backdrop-blur-md rounded-full px-4 py-1.5 border border-white/10 focus-within:border-primary/50 transition-colors">
               <Search size={18} className="text-white/50" />
               <input 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="bg-transparent border-none focus:outline-none text-white text-sm ml-2 placeholder:text-white/30" 
                 placeholder="Global intelligence search..." 
               />
-            </div>
+              <button type="submit" className="ml-2 bg-primary hover:bg-primary/80 text-white text-xs font-bold px-3 py-1.5 rounded-full transition-colors">
+                Search
+              </button>
+            </form>
             <button className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors text-white/70 hover:text-white">
               <Bell size={18} />
             </button>
