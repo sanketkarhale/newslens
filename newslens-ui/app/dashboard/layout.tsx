@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { Search, Bell, Bookmark, TrendingUp, Settings, Map, Menu, X, ArrowLeft } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSettings } from '../context/SettingsContext';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -11,6 +12,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [breakingNews, setBreakingNews] = useState("AI regulations in EU finalized. Bitcoin hits new resistance level. Asian markets open mixed.");
+  
+  const { displayName, radarAlerts, isLoaded } = useSettings();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,9 +68,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         
         <div className="p-8 border-t border-white/5 flex flex-col gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-tertiary flex items-center justify-center font-bold text-white">S</div>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-primary to-tertiary flex items-center justify-center font-bold text-white">
+              {isLoaded && displayName ? displayName.charAt(0).toUpperCase() : "S"}
+            </div>
             <div>
-              <p className="text-sm font-bold text-white">Sanket K.</p>
+              <p className="text-sm font-bold text-white truncate w-32">{isLoaded ? displayName : "Loading..."}</p>
               <p className="text-xs text-white/50">Pro Member</p>
             </div>
           </div>
@@ -88,19 +93,21 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </button>
             
             {/* Breaking News Radar */}
-            <div className="hidden lg:flex items-center gap-3 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 overflow-hidden w-96">
-              <span className="flex w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
-              <span className="text-xs font-bold text-red-500 uppercase tracking-widest whitespace-nowrap">Radar</span>
-              <div className="w-full overflow-hidden relative h-5 flex items-center">
-                <motion.p 
-                  className="text-xs font-medium text-white/80 whitespace-nowrap absolute"
-                  animate={{ x: ["100%", "-100%"] }}
-                  transition={{ ease: "linear", duration: 15, repeat: Infinity }}
-                >
-                  {breakingNews}
-                </motion.p>
+            {isLoaded && radarAlerts && (
+              <div className="hidden lg:flex items-center gap-3 bg-red-500/10 border border-red-500/20 rounded-full px-4 py-1.5 overflow-hidden w-96">
+                <span className="flex w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+                <span className="text-xs font-bold text-red-500 uppercase tracking-widest whitespace-nowrap">Radar</span>
+                <div className="w-full overflow-hidden relative h-5 flex items-center">
+                  <motion.p 
+                    className="text-xs font-medium text-white/80 whitespace-nowrap absolute"
+                    animate={{ x: ["100%", "-100%"] }}
+                    transition={{ ease: "linear", duration: 15, repeat: Infinity }}
+                  >
+                    {breakingNews}
+                  </motion.p>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           <div className="flex items-center gap-4">

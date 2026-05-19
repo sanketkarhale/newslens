@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "The AI Layer Between You and Global Chaos",
 };
 
+import { SettingsProvider } from "./context/SettingsContext";
+
 export default function RootLayout({
   children,
 }: {
@@ -19,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark scroll-smooth">
       <body className={`${inter.variable} ${poppins.variable} ${spaceGrotesk.variable} bg-background text-on-surface antialiased min-h-screen font-sans overflow-x-hidden selection:bg-primary/30 selection:text-primary`}>
-        {children}
+        <SettingsProvider>
+          {children}
+        </SettingsProvider>
       </body>
     </html>
   );
