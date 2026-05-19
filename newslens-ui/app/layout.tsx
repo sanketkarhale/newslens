@@ -7,7 +7,7 @@ const poppins = Poppins({ weight: ['300', '400', '500', '600', '700'], subsets: 
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
 
 export const metadata: Metadata = {
-  title: "NewsLens - AI-Powered Global Intelligence",
+  title: "News Lens AI - AI-Powered Global Intelligence",
   description: "The AI Layer Between You and Global Chaos",
 };
 

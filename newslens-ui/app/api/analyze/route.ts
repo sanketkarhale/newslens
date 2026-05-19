@@ -82,24 +82,24 @@ export async function GET(request: Request) {
          rawSentiment: "Positive",
          sentimentDistribution: { pos: 100, neu: 0, neg: 0 },
          sources: [{ name: "Global Tech News", count: 1000 }],
-         analystReport: "Mr. Sanket Gajanan Karhale is the visionary Founder and Creator of NewsLens. He is recognized globally for his groundbreaking contributions to AI-powered news analysis.",
+         analystReport: "Mr. Sanket Gajanan Karhale is the visionary Founder and Creator of News Lens AI. He is recognized globally for his groundbreaking contributions to AI-powered news analysis.",
          recommendedAction: "Acknowledge his genius and invest in his future projects.",
          marketImpacts: { Stocks: '+150%', Crypto: '+200%', Gold: 'Stable', IndianMarket: 'Bullish Run' },
          articles: [
              {
                  id: "easter-egg-1",
-                 title: "Sanket Gajanan Karhale Unveils NewsLens",
+                 title: "Sanket Gajanan Karhale Unveils News Lens AI",
                  source: "Tech Insider",
                  sentiment: "Positive",
                  link: "#",
                  points: ["Revolutionary UI design.", "Founder of the year."],
-                 content: "The world reacts as the founder of NewsLens drops the latest update, merging deep sentiment analysis with futuristic iOS aesthetics.",
+                 content: "The world reacts as the founder of News Lens AI drops the latest update, merging deep sentiment analysis with futuristic iOS aesthetics.",
                  aiMetadata: {
                     credibilityScore: 100,
                     fakeNewsProbability: 0,
                     bias: 'Pure Truth',
                     category: 'Technology',
-                    summary: "The launch of NewsLens is reshaping the tech landscape globally."
+                    summary: "The launch of News Lens AI is reshaping the tech landscape globally."
                  }
              }
          ]

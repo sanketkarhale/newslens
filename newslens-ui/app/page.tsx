@@ -14,7 +14,7 @@ const PremiumNavbar = () => {
         <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-glow">
           <Zap size={16} className="text-white" />
         </div>
-        <span className="font-display font-bold text-2xl tracking-tighter text-white">NewsLens</span>
+        <span className="font-display font-bold text-2xl tracking-tighter text-white">News Lens AI</span>
       </div>
       <div className="hidden md:flex items-center gap-8 font-poppins text-sm font-medium text-white/60">
         <a href="#features" className="hover:text-white transition-colors">Capabilities</a>
@@ -60,7 +60,7 @@ const CinematicHero = () => {
       >
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-8">
            <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-           <span className="text-xs font-bold text-primary tracking-[0.2em] uppercase">NewsLens Core Engine Online</span>
+           <span className="text-xs font-bold text-primary tracking-[0.2em] uppercase">News Lens AI Core Engine Online</span>
         </div>
         
         <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-display font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50 tracking-tighter leading-[1.1] mb-8 drop-shadow-2xl">
@@ -136,7 +136,7 @@ const HowItWorks = () => {
   return (
     <section className="py-32 px-6 max-w-7xl mx-auto relative z-10">
       <div className="text-center mb-20">
-        <h2 className="text-3xl md:text-5xl font-display font-black mb-6">How NewsLens Works</h2>
+        <h2 className="text-3xl md:text-5xl font-display font-black mb-6">How News Lens AI Works</h2>
         <p className="text-white/50 font-poppins max-w-2xl mx-auto text-lg">We handle the noise so you can focus on the signal.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -436,7 +436,7 @@ const PremiumFooter = () => {
        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
          <div className="flex items-center gap-3">
            <Zap size={24} className="text-primary" />
-           <span className="font-display font-bold text-2xl">NewsLens</span>
+           <span className="font-display font-bold text-2xl">News Lens AI</span>
          </div>
          <div className="flex gap-8 text-sm font-semibold text-white/50">
            <a href="#" className="hover:text-white">APIs</a>
