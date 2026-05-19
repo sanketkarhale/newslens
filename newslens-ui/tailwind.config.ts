@@ -9,12 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: '#000000',
-        surface: 'rgba(28, 28, 30, 0.5)', 
-        'surface-highlight': 'rgba(44, 44, 46, 0.8)',
-        primary: '#0A84FF', 
-        'primary-glow': 'rgba(10, 132, 255, 0.5)',
-        secondary: '#5E5CE6', 
+        background: '#0B1020',
+        surface: 'rgba(255, 255, 255, 0.05)', 
+        'surface-highlight': 'rgba(255, 255, 255, 0.1)',
+        primary: '#00D4FF', 
+        'primary-glow': 'rgba(0, 212, 255, 0.5)',
+        secondary: '#7C3AED', 
         tertiary: '#BF5AF2', 
         'on-surface': '#FFFFFF',
         'on-surface-variant': '#EBEBF5',
@@ -27,8 +27,9 @@ const config: Config = {
         'mesh-dark': 'radial-gradient(at 40% 20%, rgba(10, 132, 255, 0.15) 0px, transparent 50%), radial-gradient(at 80% 0%, rgba(94, 92, 230, 0.15) 0px, transparent 50%), radial-gradient(at 0% 50%, rgba(191, 90, 242, 0.15) 0px, transparent 50%)',
       },
       fontFamily: {
-        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
-        display: ['SF Pro Display', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['var(--font-rajdhani)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-orbitron)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-chakra)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
       animation: {
         'spin-slow': 'spin 8s linear infinite',

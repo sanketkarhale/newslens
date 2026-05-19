@@ -15,4 +15,18 @@ model User {
   password  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  savedArticles SavedArticle[]
+}
+
+model SavedArticle {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  source    String
+  link      String
+  category  String?
+  sentiment String?
+  summary   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
