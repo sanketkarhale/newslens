@@ -3,10 +3,12 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, ShieldCheck, Zap, TrendingUp, TrendingDown, Eye, MessageSquare, BookOpen, ChevronRight, X, Play, Square, Bookmark } from 'lucide-react';
+import { useSettings } from '../context/SettingsContext';
 
 function DashboardContent() {
   const searchParams = useSearchParams();
   const activeTopic = searchParams.get('topic') || 'Global Economy';
+  const { defaultLanguage } = useSettings();
   const [lang, setLang] = useState("en");
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
@@ -16,6 +18,29 @@ function DashboardContent() {
   const [chatOpen, setChatOpen] = useState(false);
   const [chatMsg, setChatMsg] = useState("");
   const [chatLog, setChatLog] = useState<{role: string, content: string}[]>([{ role: 'system', content: 'Hello, I am Sanket AI. How can I assist you with global intelligence today?' }]);
+
+  const [watchlist, setWatchlist] = useState<any[]>([]);
+  const [feedSort, setFeedSort] = useState<'latest' | 'topRated'>('latest');
+  const [toast, setToast] = useState<string | null>(null);
+
+  // Load language preference
+  useEffect(() => {
+    if (defaultLanguage) {
+      setLang(defaultLanguage);
+    }
+  }, [defaultLanguage]);
+
+  // Load watchlist on mount
+  useEffect(() => {
+    const list = localStorage.getItem("nl_watchlist");
+    if (list) {
+      try {
+        setWatchlist(JSON.parse(list));
+      } catch (e) {
+        console.error("Failed to parse watchlist", e);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -47,6 +72,21 @@ function DashboardContent() {
     setChatMsg("");
   };
 
+  const handleWatchlistToggle = (article: any) => {
+    let updated;
+    const exists = watchlist.some(a => a.id === article.id);
+    if (exists) {
+      updated = watchlist.filter(a => a.id !== article.id);
+      setToast("Removed from Watchlist");
+    } else {
+      updated = [...watchlist, article];
+      setToast("Saved to Watchlist!");
+    }
+    setWatchlist(updated);
+    localStorage.setItem("nl_watchlist", JSON.stringify(updated));
+    setTimeout(() => setToast(null), 3000);
+  };
+
   if (loading || !data) {
     return (
       <div className="h-full flex flex-col items-center justify-center relative">
@@ -57,8 +97,33 @@ function DashboardContent() {
     );
   }
 
+  // Client-side feed sorting
+  const sortedArticles = [...data.articles].sort((a: any, b: any) => {
+    if (feedSort === 'topRated') {
+      const aScore = a.aiMetadata?.credibilityScore || 80;
+      const bScore = b.aiMetadata?.credibilityScore || 80;
+      return bScore - aScore;
+    } else {
+      return new Date(b.pubDate).getTime() - new Date(a.pubDate).getTime();
+    }
+  });
+
   return (
     <div className="p-6 md:p-10 space-y-10 relative h-full w-full">
+      {/* Toast Notification */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20, scale: 0.9 }} 
+            animate={{ opacity: 1, y: 0, scale: 1 }} 
+            exit={{ opacity: 0, y: -20, scale: 0.9 }}
+            className="fixed top-6 left-1/2 -translate-x-1/2 z-[110] bg-primary/20 border border-primary text-primary px-6 py-3 rounded-full text-sm font-black shadow-glow backdrop-blur-md flex items-center gap-2 animate-pulse"
+          >
+            <Bookmark size={14} fill="currentColor" />
+            {toast}
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Header Actions */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -139,15 +204,25 @@ function DashboardContent() {
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-white">Live Intel Feed</h2>
           <div className="flex gap-2">
-             <button className="px-4 py-2 bg-white/10 rounded-lg text-xs font-bold text-white">Latest</button>
-             <button className="px-4 py-2 bg-transparent text-white/50 hover:bg-white/5 rounded-lg text-xs font-bold transition-all">Top Rated</button>
+             <button 
+               onClick={() => setFeedSort('latest')}
+               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${feedSort === 'latest' ? 'border-primary bg-primary/20 text-primary shadow-glow font-bold' : 'border-transparent text-white/50 hover:bg-white/5 hover:text-white'}`}
+             >
+               Latest
+             </button>
+             <button 
+               onClick={() => setFeedSort('topRated')}
+               className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${feedSort === 'topRated' ? 'border-primary bg-primary/20 text-primary shadow-glow font-bold' : 'border-transparent text-white/50 hover:bg-white/5 hover:text-white'}`}
+             >
+               Top Rated
+             </button>
           </div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data.articles.map((article: any, i: number) => (
+          {sortedArticles.map((article: any, i: number) => (
             <motion.div 
-              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+              initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
               key={article.id || i} 
               className="glass-card p-6 flex flex-col h-full cursor-pointer group"
               onClick={() => setSelectedArticle(article)}
@@ -302,8 +377,16 @@ function DashboardContent() {
                   </div>
 
                   <div>
-                     <button className="w-full py-3 bg-white/10 hover:bg-white/20 transition-colors rounded-xl text-sm font-bold text-white flex items-center justify-center gap-2">
-                       <Bookmark size={16} /> Save to Watchlist
+                     <button 
+                       onClick={() => handleWatchlistToggle(selectedArticle)}
+                       className={`w-full py-3 transition-colors rounded-xl text-sm font-bold flex items-center justify-center gap-2 border ${
+                         watchlist.some(a => a.id === selectedArticle.id) 
+                           ? 'bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border-rose-500/20' 
+                           : 'bg-white/10 hover:bg-white/20 text-white border-transparent'
+                       }`}
+                     >
+                       <Bookmark size={16} fill={watchlist.some(a => a.id === selectedArticle.id) ? "currentColor" : "none"} />
+                       {watchlist.some(a => a.id === selectedArticle.id) ? 'Remove from Watchlist' : 'Save to Watchlist'}
                      </button>
                   </div>
                 </div>

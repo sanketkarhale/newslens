@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -11,9 +12,7 @@ const PremiumNavbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 md:px-16 py-6 bg-background/50 backdrop-blur-xl border-b border-white/5">
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-secondary flex items-center justify-center shadow-glow">
-          <Zap size={16} className="text-white" />
-        </div>
+        <Image src="/logo.png" alt="News Lens AI Logo" width={32} height={32} className="rounded-lg shadow-glow" />
         <span className="font-display font-bold text-2xl tracking-tighter text-white">News Lens AI</span>
       </div>
       <div className="hidden md:flex items-center gap-8 font-poppins text-sm font-medium text-white/60">
@@ -435,7 +434,7 @@ const PremiumFooter = () => {
     <footer className="border-t border-white/10 bg-background pt-20 pb-10 px-6">
        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 mb-16">
          <div className="flex items-center gap-3">
-           <Zap size={24} className="text-primary" />
+           <Image src="/logo.png" alt="News Lens AI Logo" width={32} height={32} className="rounded-lg" />
            <span className="font-display font-bold text-2xl">News Lens AI</span>
          </div>
          <div className="flex gap-8 text-sm font-semibold text-white/50">

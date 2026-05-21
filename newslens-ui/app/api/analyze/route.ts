@@ -8,8 +8,21 @@ const parser = new Parser({
 });
 
 // Basic sentiment heuristic dictionaries
-const positiveWords = ['good', 'great', 'success', 'surge', 'up', 'increase', 'win', 'profit', 'bullish', 'breakthrough', 'advance', 'positive', 'growth', 'gain', 'optimal', 'better', 'best', 'soars', 'jumps', 'rises', 'boosts', 'helps', 'recovery', 'strong', 'optimism', 'record'];
-const negativeWords = ['bad', 'worst', 'fail', 'down', 'drop', 'decrease', 'loss', 'bearish', 'crash', 'negative', 'crisis', 'issue', 'problem', 'warning', 'threat', 'death', 'kill', 'murder', 'attack', 'regulatory', 'slow', 'sluggish', 'weak', 'plunge', 'dips', 'worry', 'fears', 'tension', 'conflict', 'war'];
+const positiveWords = [
+  'good', 'great', 'success', 'surge', 'up', 'increase', 'win', 'profit', 'bullish', 'breakthrough', 'advance', 'positive', 'growth', 'gain', 'optimal', 'better', 'best', 'soars', 'jumps', 'rises', 'boosts', 'helps', 'recovery', 'strong', 'optimism', 'record',
+  // Hindi Positive
+  'प्रगति', 'सफलता', 'वृद्धि', 'विकास', 'मजबूत', 'अच्छा', 'सुधार', 'क्रांति',
+  // Marathi Positive
+  'प्रगती', 'यश', 'वाढ', 'क्रांती', 'स्वीकार'
+];
+
+const negativeWords = [
+  'bad', 'worst', 'fail', 'down', 'drop', 'decrease', 'loss', 'bearish', 'crash', 'negative', 'crisis', 'issue', 'problem', 'warning', 'threat', 'death', 'kill', 'murder', 'attack', 'regulatory', 'slow', 'sluggish', 'weak', 'plunge', 'dips', 'worry', 'fears', 'tension', 'conflict', 'war',
+  // Hindi Negative
+  'मंदी', 'डर', 'गिरावट', 'नुकसान', 'खतरा', 'चिंता', 'कमजोर', 'हैरान',
+  // Marathi Negative
+  'घसरण', 'तोटा', 'धोका', 'कमकुवत', 'वाद'
+];
 
 // Categories for Mock AI
 const categoriesList = ['Politics', 'AI', 'Crypto', 'Economy', 'Startups', 'Student News', 'Geopolitics', 'Sports', 'Technology', 'Markets'];
@@ -27,19 +40,90 @@ function analyzeText(text: string) {
   return 'Neutral';
 }
 
-function generateMockAiData(title: string) {
+function generateMockAiData(title: string, lang: string = 'en') {
   const isNegative = analyzeText(title) === 'Negative';
   const credibilityScore = Math.floor(Math.random() * (99 - 70 + 1) + 70); // 70 to 99
   const fakeNewsProb = isNegative ? Math.floor(Math.random() * 30 + 10) : Math.floor(Math.random() * 15 + 1);
   const category = categoriesList[Math.floor(Math.random() * categoriesList.length)];
   
+  let bias = isNegative ? 'Slight Negative Bias' : 'Neutral/Balanced';
+  let summary = `AI generated summary: This article discusses key developments regarding ${title.substring(0, 35)}... highlighting major trends in ${category}.`;
+  
+  if (lang === 'hi') {
+    bias = isNegative ? 'हल्का नकारात्मक पूर्वाग्रह' : 'तटस्थ/संतुलित';
+    summary = `एआई सारांश: यह लेख ${title.substring(0, 35)}... के संबंध में प्रमुख घटनाक्रमों पर चर्चा करता है, जो ${category} में प्रमुख रुझानों को उजागर करता है।`;
+  } else if (lang === 'mr') {
+    bias = isNegative ? 'किंचित नकारात्मक पूर्वग्रह' : 'तटस्थ/संतुलित';
+    summary = `एआय सारांश: हा लेख ${title.substring(0, 35)}... च्या संदर्भात महत्त्वपूर्ण घडामोडींवर चर्चा करतो, जो ${category} मधील मुख्य ट्रेंड्स हायलाइट करतो।`;
+  }
+
   return {
     credibilityScore,
     fakeNewsProbability: fakeNewsProb,
-    bias: isNegative ? 'Slight Negative Bias' : 'Neutral/Balanced',
+    bias,
     category,
-    summary: `AI generated summary: This article discusses key developments regarding ${title.substring(0, 30)}... highlighting major trends in ${category}.`
+    summary
   };
+}
+
+function generateMockFeedItems(topic: string, lang: string = 'en') {
+  const cleanTopic = topic.charAt(0).toUpperCase() + topic.slice(1);
+
+  if (lang === 'hi') {
+    const templates = [
+      { title: `${cleanTopic} को लेकर वैश्विक बाजारों में मंदी की आशंका, निवेशकों में बढ़ा डर`, source: 'आर्थिक समाचार' },
+      { title: `तकनीकी प्रगति: ${cleanTopic} कैसे नए युग की शुरुआत कर रहा है`, source: 'नवभारत टाइम्स' },
+      { title: `${cleanTopic} के रणनीतिक बदलाव के अंदर की कहानी: विशेषज्ञों का बड़ा विश्लेषण`, source: 'बिजनेस वर्ल्ड' },
+      { title: `${cleanTopic} को लेकर क्यों बढ़ी वैश्विक डेवलपर्स और कंपनियों की दिलचस्पी?`, source: 'सिलिकॉन वैली हिंदी' },
+      { title: `${cleanTopic} का भविष्य: विशेषज्ञों ने चौथी तिमाही तक बड़े बदलावों की भविष्यवाणी की`, source: 'बाज़ार संदेश' },
+      { title: `स्थानीय समुदायों ने ${cleanTopic} को दिल से अपनाया, उपयोग में रिकॉर्ड वृद्धि`, source: 'दैनिक जागरण' },
+      { title: `${cleanTopic} पर नई नियामक नीतियां लागू होने से उद्योग जगत हैरान`, source: 'हिंदुस्तान' },
+      { title: `${cleanTopic} की वजह से स्टार्टअप इकोसिस्टम में आई भारी फंडिंग की लहर`, source: 'दैनिक भास्कर' }
+    ];
+
+    return templates.map((t, idx) => ({
+      title: `${t.title} - ${t.source}`,
+      link: `https://news.lens/mock/hi/${encodeURIComponent(topic)}/${idx}`,
+      pubDate: new Date(Date.now() - idx * 2 * 3600000).toISOString()
+    }));
+  }
+
+  if (lang === 'mr') {
+    const templates = [
+      { title: `${cleanTopic} मुळे जागतिक बाजारात मोठे चढ-उतार, गुंतवणूकदारांमध्ये चिंतेचे वातावरण`, source: 'महाराष्ट्र टाइम्स' },
+      { title: `तंत्रज्ञान क्रांती: ${cleanTopic} कशा प्रकारे नवीन युगाची यशस्वी सुरुवात करत आहे`, source: 'लोकसत्ता' },
+      { title: `${cleanTopic} मधील धोरणात्मक बदल: गुंतवणूकदारांसाठी सर्वात महत्त्वाची माहिती`, source: 'सकाळ वृत्तसेवा' },
+      { title: `जागतिक स्तरावर ${cleanTopic} ची वाढती लोकप्रियता, नवीन ट्रेंड्स समोर`, source: 'पुढारी' },
+      { title: `${cleanTopic} चे भविष्य: तज्ज्ञांनी वर्तवला चौथ्या तिमाहीत प्रचंड मोठा बदल`, source: 'मराठी बिझनेस' },
+      { title: `स्थानिक पातळीवर ${cleanTopic} चा वाढता स्वीकार, वापरामध्ये ऐतिहासिक वाढ`, source: 'सामना' },
+      { title: `${cleanTopic} वर सरकारने आणले नवीन नियम, उद्योजकांमध्ये तीव्र पडसाद`, source: 'लोकमत' },
+      { title: `${cleanTopic} च्या जोरावर नव्या स्टार्टअप्सनी उभारला कोट्यवधींचा निधी`, source: 'दिव्य मराठी' }
+    ];
+
+    return templates.map((t, idx) => ({
+      title: `${t.title} - ${t.source}`,
+      link: `https://news.lens/mock/mr/${encodeURIComponent(topic)}/${idx}`,
+      pubDate: new Date(Date.now() - idx * 2 * 3600000).toISOString()
+    }));
+  }
+
+  // English
+  const templatesEn = [
+    { title: `${cleanTopic} faces critical regulatory hurdles as global markets react with worry`, source: 'Wall Street Journal' },
+    { title: `Tech breakthrough: How ${cleanTopic} is driving the next wave of massive innovation`, source: 'TechCrunch' },
+    { title: `Inside the strategic pivot of ${cleanTopic}: What smart investors need to know now`, source: 'Bloomberg' },
+    { title: `Why ${cleanTopic} is becoming the hottest topic among Silicon Valley developers`, source: 'Silicon Valley News' },
+    { title: `The future of ${cleanTopic}: Experts predict massive market shifts by Q4`, source: 'Market Watch' },
+    { title: `Local communities embrace ${cleanTopic} as global adoption hits a record high`, source: 'Global Chronicle' },
+    { title: `New research warns of potential drawbacks and security issues in ${cleanTopic}`, source: 'Wired' },
+    { title: `Startups raising billions to harness the power of ${cleanTopic} in key industries`, source: 'Forbes' }
+  ];
+
+  return templatesEn.map((t, idx) => ({
+    title: `${t.title} - ${t.source}`,
+    link: `https://news.lens/mock/en/${encodeURIComponent(topic)}/${idx}`,
+    pubDate: new Date(Date.now() - idx * 2 * 3600000).toISOString()
+  }));
 }
 
 export async function GET(request: Request) {
@@ -122,17 +206,22 @@ export async function GET(request: Request) {
     let feed: any = { items: [] };
     try {
       feed = await parser.parseURL(feedUrl);
-    } catch (e) {
-      console.warn("Google News RSS blocked, falling back to Yahoo...");
+    } catch (e: any) {
+      console.warn("Google News RSS blocked, falling back to Yahoo...", e?.message || e);
     }
 
     if (!feed.items || feed.items.length === 0) {
       const fallbackUrl = `https://news.yahoo.com/rss/search?p=${encodeURIComponent(topic)}`;
       try {
         feed = await parser.parseURL(fallbackUrl);
-      } catch (e) {
-        console.error("Both RSS feeds failed.");
+      } catch (e: any) {
+        console.error("Both RSS feeds failed.", e?.message || e);
       }
+    }
+
+    // Dynamic mock fallback if both RSS feeds returned empty / failed
+    if (!feed.items || feed.items.length === 0) {
+      feed.items = generateMockFeedItems(topic, lang);
     }
 
     let pos = 0, neu = 0, neg = 0;
@@ -147,7 +236,18 @@ export async function GET(request: Request) {
 
       sourceMap[source] = (sourceMap[source] || 0) + 1;
       
-      const aiMeta = generateMockAiData(rawTitle);
+      const aiMeta = generateMockAiData(rawTitle, lang);
+
+      let pubText = `Published: ${new Date(item.pubDate || '').toLocaleDateString() || 'Recent'}`;
+      let contentText = `This article was published by ${source} on ${new Date(item.pubDate || '').toLocaleString()}. ` + aiMeta.summary;
+
+      if (lang === 'hi') {
+        pubText = `प्रकाशित: ${new Date(item.pubDate || '').toLocaleDateString() || 'हाल ही में'}`;
+        contentText = `यह लेख ${new Date(item.pubDate || '').toLocaleString()} को ${source} द्वारा प्रकाशित किया गया था। ` + aiMeta.summary;
+      } else if (lang === 'mr') {
+        pubText = `प्रसिद्ध केले: ${new Date(item.pubDate || '').toLocaleDateString() || 'नुकतेच'}`;
+        contentText = `हा लेख ${new Date(item.pubDate || '').toLocaleString()} रोजी ${source} द्वारे प्रसिद्ध करण्यात आला होता। ` + aiMeta.summary;
+      }
 
       articles.push({
         id: Buffer.from(item.link || rawTitle).toString('base64').substring(15, 25) + Math.random().toString(36).substring(2, 7),
@@ -157,10 +257,10 @@ export async function GET(request: Request) {
         link: item.link || '#',
         pubDate: item.pubDate || new Date().toISOString(),
         points: [
-          `Published: ${new Date(item.pubDate || '').toLocaleDateString() || 'Recent'}`,
+          pubText,
           `Pending NLP Sentiment...`
         ],
-        content: `This article was published by ${source} on ${new Date(item.pubDate || '').toLocaleString()}. ` + aiMeta.summary,
+        content: contentText,
         aiMetadata: aiMeta
       });
     }
@@ -178,7 +278,12 @@ export async function GET(request: Request) {
         analystReport: `No recent news signals were found for "${topic}". Try broadening your search.`,
         recommendedAction: `Try searching for related keywords.`,
         marketImpacts: { Stocks: 'Neutral', Crypto: 'Neutral', Gold: 'Neutral', IndianMarket: 'Neutral' },
-        articles: []
+        articles: [],
+        debugInfo: {
+          feedUrl,
+          itemsLength: feed?.items?.length || 0,
+          feedKeys: Object.keys(feed || {}),
+        }
       });
     }
 
@@ -191,7 +296,17 @@ export async function GET(request: Request) {
     for (const article of articles) {
       const sentiment = analyzeText(article.title);
       article.sentiment = sentiment;
-      article.points[1] = `AI Sentiment scored as ${sentiment}.`;
+      
+      if (lang === 'hi') {
+        const localizedSent = sentiment === 'Positive' ? 'सकारात्मक' : sentiment === 'Negative' ? 'नकारात्मक' : 'तटस्थ';
+        article.points[1] = `एआई सेंटीमेंट स्कोर: ${localizedSent}.`;
+      } else if (lang === 'mr') {
+        const localizedSent = sentiment === 'Positive' ? 'सकारात्मक' : sentiment === 'Negative' ? 'नकारात्मक' : 'तटस्थ';
+        article.points[1] = `एआय सेंटीमेंट स्कोअर: ${localizedSent}.`;
+      } else {
+        article.points[1] = `AI Sentiment scored as ${sentiment}.`;
+      }
+      
       if (sentiment === 'Positive') pos++;
       else if (sentiment === 'Negative') neg++;
       else neu++;

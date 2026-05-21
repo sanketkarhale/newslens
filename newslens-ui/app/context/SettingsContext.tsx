@@ -13,6 +13,19 @@ interface SettingsContextType {
   setRadarAlerts: (val: boolean) => void;
   dataSaver: boolean;
   setDataSaver: (val: boolean) => void;
+  // Expanded fields
+  defaultLanguage: string;
+  setDefaultLanguage: (val: string) => void;
+  activePlan: string;
+  setActivePlan: (val: string) => void;
+  emailDigest: string;
+  setEmailDigest: (val: string) => void;
+  pushEnabled: boolean;
+  setPushEnabled: (val: boolean) => void;
+  soundEnabled: boolean;
+  setSoundEnabled: (val: boolean) => void;
+  paymentCard: string;
+  setPaymentCard: (val: string) => void;
   isLoaded: boolean;
 }
 
@@ -24,6 +37,15 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [aggressiveAi, setAggressiveAi] = useState(false);
   const [radarAlerts, setRadarAlerts] = useState(true);
   const [dataSaver, setDataSaver] = useState(false);
+
+  // New fields
+  const [defaultLanguage, setDefaultLanguage] = useState("en");
+  const [activePlan, setActivePlan] = useState("Pro Analyst");
+  const [emailDigest, setEmailDigest] = useState("daily");
+  const [pushEnabled, setPushEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [paymentCard, setPaymentCard] = useState("Visa ending in 4242");
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Load from localStorage on mount
@@ -34,11 +56,25 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     const savedRadarAlerts = localStorage.getItem("nl_radarAlerts");
     const savedDataSaver = localStorage.getItem("nl_dataSaver");
 
+    const savedLang = localStorage.getItem("nl_defaultLanguage");
+    const savedPlan = localStorage.getItem("nl_activePlan");
+    const savedEmailDigest = localStorage.getItem("nl_emailDigest");
+    const savedPushEnabled = localStorage.getItem("nl_pushEnabled");
+    const savedSoundEnabled = localStorage.getItem("nl_soundEnabled");
+    const savedPaymentCard = localStorage.getItem("nl_paymentCard");
+
     if (savedName) setDisplayName(savedName);
     if (savedEmail) setEmail(savedEmail);
     if (savedAggressiveAi !== null) setAggressiveAi(savedAggressiveAi === "true");
     if (savedRadarAlerts !== null) setRadarAlerts(savedRadarAlerts === "true");
     if (savedDataSaver !== null) setDataSaver(savedDataSaver === "true");
+
+    if (savedLang) setDefaultLanguage(savedLang);
+    if (savedPlan) setActivePlan(savedPlan);
+    if (savedEmailDigest) setEmailDigest(savedEmailDigest);
+    if (savedPushEnabled !== null) setPushEnabled(savedPushEnabled === "true");
+    if (savedSoundEnabled !== null) setSoundEnabled(savedSoundEnabled === "true");
+    if (savedPaymentCard) setPaymentCard(savedPaymentCard);
     
     setIsLoaded(true);
   }, []);
@@ -51,7 +87,14 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("nl_aggressiveAi", String(aggressiveAi));
     localStorage.setItem("nl_radarAlerts", String(radarAlerts));
     localStorage.setItem("nl_dataSaver", String(dataSaver));
-  }, [displayName, email, aggressiveAi, radarAlerts, dataSaver, isLoaded]);
+
+    localStorage.setItem("nl_defaultLanguage", defaultLanguage);
+    localStorage.setItem("nl_activePlan", activePlan);
+    localStorage.setItem("nl_emailDigest", emailDigest);
+    localStorage.setItem("nl_pushEnabled", String(pushEnabled));
+    localStorage.setItem("nl_soundEnabled", String(soundEnabled));
+    localStorage.setItem("nl_paymentCard", paymentCard);
+  }, [displayName, email, aggressiveAi, radarAlerts, dataSaver, defaultLanguage, activePlan, emailDigest, pushEnabled, soundEnabled, paymentCard, isLoaded]);
 
   return (
     <SettingsContext.Provider value={{
@@ -60,6 +103,12 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       aggressiveAi, setAggressiveAi,
       radarAlerts, setRadarAlerts,
       dataSaver, setDataSaver,
+      defaultLanguage, setDefaultLanguage,
+      activePlan, setActivePlan,
+      emailDigest, setEmailDigest,
+      pushEnabled, setPushEnabled,
+      soundEnabled, setSoundEnabled,
+      paymentCard, setPaymentCard,
       isLoaded
     }}>
       {children}

@@ -1,4 +1,5 @@
 "use client";
+import Image from 'next/image';
 import { ReactNode, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
@@ -48,8 +49,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         animate={{ x: sidebarOpen ? 0 : -300 }}
         className={`fixed md:static inset-y-0 left-0 w-64 z-50 glass-card rounded-none rounded-r-[2.5rem] md:rounded-none md:border-y-0 md:border-l-0 flex flex-col md:translate-x-0 transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
       >
+
         <div className="p-8 flex items-center justify-between">
-          <Link href="/" className="font-black text-2xl tracking-tighter text-white">News Lens AI</Link>
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/logo.png" alt="News Lens AI Logo" width={40} height={40} className="rounded-xl shadow-glow" />
+            <span className="font-black text-2xl tracking-tighter text-white">News Lens AI</span>
+          </Link>
           <button onClick={() => setSidebarOpen(false)} className="md:hidden text-white/50"><X size={24} /></button>
         </div>
         
